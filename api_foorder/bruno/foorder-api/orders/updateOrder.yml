@@ -1,0 +1,25 @@
+info:
+  name: updateOrder
+  type: http
+  seq: 1
+
+http:
+  method: PATCH
+  url: http://localhost:3000/orders/name/:orderId
+  params:
+    - name: orderId
+      value: "2"
+      type: path
+  body:
+    type: json
+    data: |-
+      {
+        "name": "Vandewalle"
+      }
+  auth: inherit
+
+settings:
+  encodeUrl: true
+  timeout: 0
+  followRedirects: true
+  maxRedirects: 5
