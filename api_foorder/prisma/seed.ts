@@ -40,15 +40,19 @@ async function main() {
         data: [
             {
                 name: "Sandwich saucisse",
+                price: 5
             },
             {
                 name: "Américain saucisse",
+                price: 6.50
             },
             {
                 name: "Sandwich merguez",
+                price: 5
             },
             {
                 name: "Américain merguez",
+                price: 6.50
             }
         ]
     })

@@ -38,6 +38,7 @@ model Orders {
 model Products {
   product_id  Int        @id  @default(autoincrement())
   name        String
+  price       Float
 
   orders   ProductOrderRelation[]
 }
