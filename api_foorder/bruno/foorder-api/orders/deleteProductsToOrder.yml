@@ -1,0 +1,25 @@
+info:
+  name: deleteProductsToOrder
+  type: http
+  seq: 1
+
+http:
+  method: DELETE
+  url: http://localhost:3000/orders/products/delete/:orderId
+  params:
+    - name: orderId
+      value: "1"
+      type: path
+  body:
+    type: json
+    data: |-
+      {
+        "ids": [3, 4]
+      }
+  auth: inherit
+
+settings:
+  encodeUrl: true
+  timeout: 0
+  followRedirects: true
+  maxRedirects: 5

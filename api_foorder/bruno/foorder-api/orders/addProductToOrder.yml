@@ -1,0 +1,30 @@
+info:
+  name: addProductToOrder
+  type: http
+  seq: 1
+
+http:
+  method: PATCH
+  url: http://localhost:3000/orders/products/add/:orderId
+  params:
+    - name: orderId
+      value: "1"
+      type: path
+  body:
+    type: json
+    data: |-
+      {
+        "products": [
+          {
+            "product_id": 3,
+            "quantite": 2
+          }
+        ]
+      }
+  auth: inherit
+
+settings:
+  encodeUrl: true
+  timeout: 0
+  followRedirects: true
+  maxRedirects: 5
