@@ -40,13 +40,16 @@ model Products {
   name        String
   price       Float
 
-  orders   ProductOrderRelation[]
+  orders      ProductOrderRelation[]
+  ingredients RecetteProduit[]
 }
 
 model Ingredients {
   ingredient_id   Int    @id   @default(autoincrement())
   name            String
   stock           Int
+  
+  products        RecetteProduit[]
 }
 
 model ProductOrderRelation {
@@ -61,4 +64,18 @@ model ProductOrderRelation {
   quantite      Int
 
   @@unique([order_id, product_id])
+}
+
+model RecetteProduit {
+  recette_id      Int       @id @default(autoincrement())
+
+  product         Products  @relation(fields: [product_id], references: [product_id], onDelete: Cascade)
+  product_id      Int
+
+  ingredient      Ingredients @relation(fields: [ingredient_id], references: [ingredient_id], onDelete: Cascade)
+  ingredient_id   Int
+
+  quantite        Int
+
+  @@unique([product_id, ingredient_id])
 }
