@@ -1,0 +1,25 @@
+info:
+  name: updateProduct
+  type: http
+  seq: 1
+
+http:
+  method: PATCH
+  url: http://localhost:3000/products/:productId
+  params:
+    - name: productId
+      value: "5"
+      type: path
+  body:
+    type: json
+    data: |-
+      {
+        "price": 4
+      }
+  auth: inherit
+
+settings:
+  encodeUrl: true
+  timeout: 0
+  followRedirects: true
+  maxRedirects: 5

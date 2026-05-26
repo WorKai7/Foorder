@@ -39,7 +39,7 @@ export async function getOrder(req: Request, res: Response) {
             }
         })
 
-        if (!order) return res.status(404).json({ message: "Objet non trouvé en base de donnée" })
+        if (!order) return res.status(404).json({ message: "Objet non trouvé en base de données" })
 
         return res.status(200).json(order)
 
