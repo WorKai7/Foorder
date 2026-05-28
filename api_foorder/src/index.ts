@@ -2,6 +2,7 @@ import express, { type Request, type Response } from "express"
 import { userRouter } from "./users/users.router.js"
 import { orderRouter } from "./orders/orders.router.js"
 import { productRouter } from "./products/products.router.js"
+import { ingredientRouter } from "./ingredients/ingredients.router.js"
 
 const app = express()
 const port = 3000
@@ -11,6 +12,7 @@ app.use(express.json())
 app.use("/users", userRouter)
 app.use("/orders", orderRouter)
 app.use("/products", productRouter)
+app.use("/ingredients", ingredientRouter)
 
 app.get("/", (req: Request, res: Response) => {
     res.send("Hello World !")

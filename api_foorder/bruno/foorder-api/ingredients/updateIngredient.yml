@@ -1,0 +1,25 @@
+info:
+  name: updateIngredient
+  type: http
+  seq: 1
+
+http:
+  method: PATCH
+  url: http://localhost:3000/ingredients/:ingredientId
+  params:
+    - name: ingredientId
+      value: "3"
+      type: path
+  body:
+    type: json
+    data: |-
+      {
+        "stock": 30
+      }
+  auth: inherit
+
+settings:
+  encodeUrl: true
+  timeout: 0
+  followRedirects: true
+  maxRedirects: 5

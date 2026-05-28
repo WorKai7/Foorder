@@ -1,0 +1,19 @@
+info:
+  name: getIngredient
+  type: http
+  seq: 1
+
+http:
+  method: GET
+  url: http://localhost:3000/ingredients/:ingredientId
+  params:
+    - name: ingredientId
+      value: "2"
+      type: path
+  auth: inherit
+
+settings:
+  encodeUrl: true
+  timeout: 0
+  followRedirects: true
+  maxRedirects: 5
