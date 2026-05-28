@@ -1,6 +1,7 @@
 import { prisma } from "../lib/prisma.js"
 
 async function main() {
+    await prisma.recetteProduit.deleteMany();
     await prisma.productOrderRelation.deleteMany();
     await prisma.user.deleteMany();
     await prisma.products.deleteMany();
@@ -55,6 +56,55 @@ async function main() {
                 price: 6.50
             }
         ]
+    })
+
+
+    await prisma.recetteProduit.create({
+        data: {
+            product: {
+                connect: { product_id: 1 }
+            },
+            ingredient: {
+                connect: { ingredient_id: 1 }
+            },
+            quantite: 1
+        }
+    })
+
+    await prisma.recetteProduit.create({
+        data: {
+            product: {
+                connect: { product_id: 2 }
+            },
+            ingredient: {
+                connect: { ingredient_id: 1 }
+            },
+            quantite: 1
+        }
+    })
+
+    await prisma.recetteProduit.create({
+        data: {
+            product: {
+                connect: { product_id: 3 }
+            },
+            ingredient: {
+                connect: { ingredient_id: 2 }
+            },
+            quantite: 1
+        }
+    })
+
+    await prisma.recetteProduit.create({
+        data: {
+            product: {
+                connect: { product_id: 4 }
+            },
+            ingredient: {
+                connect: { ingredient_id: 2 }
+            },
+            quantite: 1
+        }
     })
 
 

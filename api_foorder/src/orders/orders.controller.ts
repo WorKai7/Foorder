@@ -8,7 +8,21 @@ export async function getOrders(req: Request, res: Response) {
             include: {
                 products: {
                     select: {
-                        product: true,
+                        product: {
+                            include: {
+                                ingredients: {
+                                    select: {
+                                        ingredient: {
+                                            select: {
+                                                ingredient_id: true,
+                                                name: true
+                                            }
+                                        },
+                                        quantite: true
+                                    }
+                                }
+                            }
+                        },
                         quantite: true
                     }
                 }
@@ -32,7 +46,21 @@ export async function getOrder(req: Request, res: Response) {
             include: {
                 products: {
                     select: {
-                        product: true,
+                        product: {
+                            include: {
+                                ingredients: {
+                                    select: {
+                                        ingredient: {
+                                            select: {
+                                                ingredient_id: true,
+                                                name: true
+                                            }
+                                        },
+                                        quantite: true
+                                    }
+                                }
+                            }
+                        },
                         quantite: true
                     }
                 }
@@ -68,8 +96,39 @@ export async function createOrder(req: Request, res: Response) {
                         }
                     }))
                 }
+            },
+            include: {
+                products: {
+                    select: {
+                        product: {
+                            include: {
+                                ingredients: {
+                                    select: {
+                                        ingredient: {
+                                            select: {
+                                                ingredient_id: true,
+                                                stock: true
+                                            }
+                                        },
+                                        quantite: true
+                                    }
+                                }
+                            }
+                        },
+                        quantite: true
+                    }
+                }
             }
         })
+
+        for (let product of newOrder.products) {
+            for (let ingredient of product.product.ingredients) {
+                await prisma.ingredients.update({
+                    where: { ingredient_id: ingredient.ingredient.ingredient_id },
+                    data: { stock: ingredient.ingredient.stock - product.quantite * ingredient.quantite }
+                })
+            }
+        }
 
         return res.status(201).json(newOrder)
 

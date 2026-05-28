@@ -4,7 +4,16 @@ import { prisma } from "../../lib/prisma.js";
 
 export async function getProducts(req: Request, res: Response) {
     try {
-        const products = await prisma.products.findMany()
+        const products = await prisma.products.findMany({
+            include: {
+                ingredients: {
+                    select: {
+                        ingredient: true,
+                        quantite: true
+                    }
+                }
+            }
+        })
 
         if (products.length <= 0) return res.status(204).json([])
 
@@ -18,7 +27,15 @@ export async function getProducts(req: Request, res: Response) {
 export async function getProduct(req: Request, res: Response) {
     try {
         const product = await prisma.products.findUnique({
-            where: { product_id: Number(req.params.productId) }
+            where: { product_id: Number(req.params.productId) },
+            include: {
+                ingredients: {
+                    select: {
+                        ingredient: true,
+                        quantite: true
+                    }
+                }
+            }
         })
 
         if (!product) return res.status(404).json({ message: "Objet non trouvé dans la base de données" })
