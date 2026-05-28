@@ -210,7 +210,41 @@ export async function updateName(req: Request, res: Response) {
 
 export async function deleteOrder(req: Request, res: Response) {
     try {
-        const deletedOrder = await prisma.orders.delete({ where: { order_id: Number(req.params.orderId) } })
+        const deletedOrder = await prisma.orders.delete({
+            where: { order_id: Number(req.params.orderId) },
+            include: {
+                products: {
+                    select: {
+                        product: {
+                            include: {
+                                ingredients: {
+                                    select: {
+                                        ingredient: {
+                                            select: {
+                                                ingredient_id: true,
+                                                stock: true
+                                            }
+                                        },
+                                        quantite: true
+                                    }
+                                }
+                            }
+                        },
+                        quantite: true
+                    }
+                }
+            }
+        })
+
+        for (let product of deletedOrder.products) {
+            for (let ingredient of product.product.ingredients) {
+                await prisma.ingredients.update({
+                    where: { ingredient_id: ingredient.ingredient.ingredient_id },
+                    data: { stock: ingredient.ingredient.stock + product.quantite * ingredient.quantite }
+                })
+            }
+        }
+
         return res.status(200).json(deletedOrder)
 
     } catch (error) {
